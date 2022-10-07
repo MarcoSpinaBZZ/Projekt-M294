@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("passwordInput").value
         const login = {email: email, password: password}
 
-        alert(JSON.stringify.login)
-
         fetch(`http://127.0.0.1:3000/auth/cookie/login`, {
             method: "POST",
             credentials: "include",
@@ -22,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Content-Type':'application/json',
             },
             body: JSON.stringify(login)
-        })
+        }).then(() => window.location.reload())
     })
 })
 
@@ -34,13 +32,12 @@ function checkLoggedIn() {
     fetch(`http://127.0.0.1:3000/auth/cookie/status`, {
         credentials: "include"
     }).then(function(response) {
-        console.log(response)
-        if (response.status == 401) {
-            elementWhenLoggedIn.classList.add("hidden")
-            elementWhenNotLoggedIn.classList.remove("hidden")
-        } else {
+        if (response.status === 200) {
             elementWhenLoggedIn.classList.remove("hidden")
             elementWhenNotLoggedIn.classList.add("hidden")
+        } else {
+            elementWhenLoggedIn.classList.add("hidden")
+            elementWhenNotLoggedIn.classList.remove("hidden")
         }
     })
 };

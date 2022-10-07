@@ -2,8 +2,9 @@ function createTask() {
     const addInput = document.getElementById("addInput")
     const task = { title: addInput.value }
 
-    fetch("http://localhost:3000/tasks", {
+    fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
         method: 'POST',
+        credentials: "include",
         headers: {
             'Content-Type': 'application/json'
         },

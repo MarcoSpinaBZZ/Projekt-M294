@@ -30,7 +30,9 @@ function renderTasks(tasks) {
 }
 
 function indexTask() {
-    fetch("http://localhost:3000/tasks")
+    fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+        credentials: "include",
+    })
         .then((response) => response.json())
         .then((data) => renderTasks(data))
 }
@@ -41,15 +43,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function deleteTask(id) {
-    fetch(`http://localhost:3000/task/${id}`, {
+    fetch(`http://127.0.0.1:3000/auth/cookie/task/${id}`, {
         method: 'DELETE',
+        credentials: "include",
     }).then(() => location.reload())
 };
 
 function renameTask(id) {
     const bearbeiten = prompt("Neuer Taskname eingeben:")
-    fetch(`http://localhost:3000/tasks`, {
+    fetch(`http://127.0.0.1:3000/auth/cookie/tasks`, {
         method: 'PUT',
+        credentials: "include",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -64,8 +68,9 @@ function renameTask(id) {
 function completeTask(task, completed) {
     
 
-    fetch(`http://localhost:3000/tasks`, {
+    fetch(`http://127.0.0.1:3000/auth/cookie/tasks`, {
         method: 'PUT',
+        credentials: "include",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -78,13 +83,3 @@ function completeTask(task, completed) {
         .then((response) => response.json())
         .then(() => location.reload())
 };
-/*function indexTask() {
-    fetch("http://localhost:3000/auth/cookies/tasks", {
-        method: 'POST',
-        Credentials: 'include',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(task)
-    }).then()
-};*/
