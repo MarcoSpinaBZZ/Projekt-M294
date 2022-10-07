@@ -14,10 +14,9 @@ function renderTasks(tasks) {
         button.addEventListener("click", () => deleteTask(task.id));
         document.body.appendChild(button);
         const bearbeiten = document.createElement("button")
-        bearbeiten.innerText = "Tasks Bearbeiten"
-        bearbeiten.addEventListener("click", () => renameTask(task.completed));
-        document.body.appendChild(button);
-        tableRow.append(createCell(task.id),createCell(task.title),createCell(task.completed));
+        bearbeiten.innerText = "Taskname ändern"
+        bearbeiten.addEventListener("click", () => renameTask(task.id));
+        tableRow.append(createCell(task.id), createCell(task.title), createCell(task.completed));
         tableBody.appendChild(tableRow);
         tableRow.appendChild(button);
         tableRow.appendChild(bearbeiten);
@@ -26,8 +25,8 @@ function renderTasks(tasks) {
 
 function indexTask() {
     fetch("http://localhost:3000/tasks")
-    .then((response) => response.json())
-    .then((data) => renderTasks(data))
+        .then((response) => response.json())
+        .then((data) => renderTasks(data))
 }
 
 
@@ -36,22 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
     indexTask();
 });
 
-    function deleteTask(id) {
-        fetch(`http://localhost:3000/task/${id}`, {
+function deleteTask(id) {
+    fetch(`http://localhost:3000/task/${id}`, {
         method: 'DELETE',
-     }) 
-     location. reload() 
+    }).then(() => location.reload())
 };
 
-    function renameTask(title) {
-        fetch(`http://localhost:3000/task/${title}`, {
+function renameTask(id) {
+    const bearbeiten = prompt("Neuer Taskname eingeben:")
+    fetch(`http://localhost:3000/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(title)
-    })
-    location. reload() 
+        body: JSON.stringify({
+            id: id,
+            title: bearbeiten,
+        })
+    }).then(() => location.reload())
+    
 };
 
 /*function indexTask() {
