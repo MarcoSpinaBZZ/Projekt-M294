@@ -38,6 +38,7 @@ function checkLoggedIn() {
         } else {
             elementWhenLoggedIn.classList.add("hidden")
             elementWhenNotLoggedIn.classList.remove("hidden")
+            alert("Falsche Anmeldedaten!")
         }
     })
 };
