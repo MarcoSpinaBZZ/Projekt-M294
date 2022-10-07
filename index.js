@@ -9,17 +9,23 @@ function renderTasks(tasks) {
     const tableBody = document.querySelector('tbody');
     tasks.forEach((task) => {
         const tableRow = document.createElement('tr');
+        const box = document.createElement("input");
+        box.checked = task.completed
+        box.type = "checkbox"
+        box.addEventListener("click", (event) => completeTask(task, event.target.checked));
         const button = document.createElement("button")
-        button.innerText = "Delete"
+        button.innerText = "Delete🗑"
         button.addEventListener("click", () => deleteTask(task.id));
         document.body.appendChild(button);
         const bearbeiten = document.createElement("button")
-        bearbeiten.innerText = "Taskname ändern"
+        bearbeiten.innerText = "Taskname ändern📋"
         bearbeiten.addEventListener("click", () => renameTask(task.id));
         tableRow.append(createCell(task.id), createCell(task.title), createCell(task.completed));
         tableBody.appendChild(tableRow);
+        tableRow.appendChild(box);
         tableRow.appendChild(button);
         tableRow.appendChild(bearbeiten);
+
     });
 }
 
@@ -31,7 +37,6 @@ function indexTask() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("add")
     indexTask();
 });
 
@@ -53,9 +58,26 @@ function renameTask(id) {
             title: bearbeiten,
         })
     }).then(() => location.reload())
-    
+
 };
 
+function completeTask(task, completed) {
+    
+
+    fetch(`http://localhost:3000/tasks`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: task.id,
+            title: task.title,
+            completed: completed,
+        })
+    })
+        .then((response) => response.json())
+        .then(() => location.reload())
+};
 /*function indexTask() {
     fetch("http://localhost:3000/auth/cookies/tasks", {
         method: 'POST',
