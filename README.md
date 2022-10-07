@@ -15,7 +15,7 @@ Marco Spina
 1.0.0
 
 # Lizenz
-MID
+MIT
 
 # Testprotokoll/Testfälle
 Viele Tests wurden durchgeführt.
